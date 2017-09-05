@@ -29,7 +29,6 @@ public class Destructable : MonoBehaviour {
 
     private void Destroy(int i)
     {
-        Debug.Log("TESTING FOR " + i);
         if (transform.Find("Destructable" + i.ToString()) != null)
             if(!gmjToFall.Contains(transform.Find("Destructable" + i.ToString()).gameObject))
                 gmjToFall.Add(transform.Find("Destructable" + i).gameObject);

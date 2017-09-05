@@ -63,6 +63,11 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (col.gameObject.tag.Equals("Player"))
+        {
+            PlayerCollision(col);
+            return;
+        }
         Vector2 n = col.contacts[0].normal;
         Vector2 newDir = Vector2.Reflect(velocityFromLastFrame, n);
         Vector2 correctMomentum = newDir;
@@ -72,7 +77,42 @@ public class PlayerScript : MonoBehaviour {
         if (col.contacts[0].point.y < transform.position.y)
             correctMomentum.y = minVerticalSpeed;
 
+
+
         body.velocity = correctMomentum;
+    }
+
+    float lastPlayerCollisionTime;
+    private void PlayerCollision(Collision2D col)
+    {
+        if (transform.position.y < col.gameObject.transform.position.y)
+            return;
+        if (Time.time < (lastPlayerCollisionTime + 0.1f))
+            return;
+
+        var otherScript = col.gameObject.GetComponent<PlayerScript>();
+        lastPlayerCollisionTime = Time.time;
+        otherScript.UpdateLastPlayerCollisionTime();
+
+        var otherVel = otherScript.GetVelocity();
+        otherScript.SetVelocity(velocityFromLastFrame);
+        body.velocity = otherVel;
+
+    }
+
+    private void UpdateLastPlayerCollisionTime()
+    {
+        lastPlayerCollisionTime = Time.time;
+    }
+
+    private void SetVelocity(Vector2 newVel)
+    {
+        body.velocity = newVel;
+    }
+
+    private Vector2 GetVelocity()
+    {
+        return velocityFromLastFrame;
     }
 
     public Vector2 Rotate(Vector2 v, float degrees)
