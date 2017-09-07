@@ -28,10 +28,18 @@ public class PlayerScript : MonoBehaviour {
     public AudioClip playerBounceSound;
     public AudioClip deathSound;
 
+    private float growSpeed;
+    private float growSpan;
+    private Vector2 originalSize;
+
     void Start () {
         originalCameraPosition = mainCamera.transform.position;
         body = GetComponent<Rigidbody2D>();
         audioSource = GameObject.Find("Score").GetComponent<AudioSource>();
+        
+        growSpeed = 10f;
+        growSpan = 0.8f;
+        originalSize = transform.localScale;
     }
 
     private void UseNoncontinuousInput()
@@ -87,6 +95,8 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        InvokeRepeating("BounceSprite", 0, 0.01f);
+        Invoke("StopBouncing", 0.15f);
 
         if (col.gameObject.tag.Equals("Player"))
         {
@@ -174,5 +184,17 @@ public class PlayerScript : MonoBehaviour {
     {
         CancelInvoke("CameraShake");
         mainCamera.transform.position = originalCameraPosition;
+    }
+
+    public void BounceSprite()
+    {
+        float growSize = Mathf.Sin(Time.time * growSpeed) * growSpan / 2.0f;
+        gameObject.GetComponent<Transform>().localScale = new Vector2(originalSize.x + growSize, originalSize.y + growSize);
+    }
+
+    void StopBouncing()
+    {
+        CancelInvoke("BounceSprite");
+        transform.localScale = originalSize;
     }
 }
