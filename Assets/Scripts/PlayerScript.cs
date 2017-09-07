@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour {
 
-    public float playerHitEachOtherImpact = 2f;
+    public float playerHitEachOtherImpact = 1.5f;
     public string leftButton;
     public string rightButton;
     public bool continuousInput;
