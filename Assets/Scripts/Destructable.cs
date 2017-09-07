@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Destructable : MonoBehaviour {
 
+    float mapStartTime;
     public bool randomlyDestroyFloor;
     List<GameObject> gmjToFalling;
     GameObject[] gmjToFall;
@@ -15,16 +16,17 @@ public class Destructable : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        mapStartTime = Time.time;
         gmjToFall = new GameObject[10];
         gmjToFalling = new List<GameObject>();
         gmjStillAlive = new List<GameObject>();
         for (int i = 0; i <= 9; i++)
         {
-            var gmj = transform.Find("Destructable" + i.ToString()).gameObject;
-            if (gmj != null)
+            var transform = base.transform.Find("Destructable" + i.ToString());
+            if (transform != null)
             {
-                gmjStillAlive.Add(gmj);
-                gmjToFall[i] = gmj;
+                gmjStillAlive.Add(transform.gameObject);
+                gmjToFall[i] = transform.gameObject;
                 amountGmjFound++;
             }
         }
@@ -49,10 +51,10 @@ public class Destructable : MonoBehaviour {
 
     private void CheckForRandomGmjToDestroy()
     {
-        if (!randomlyDestroyFloor)
+        if (!randomlyDestroyFloor || gmjStillAlive.Count == 0)
             return;
-        float timePrFall = amountGmjFound / mapTimeInSeconds;
-        if (Time.time > (timePrFall * gmjStillAlive.Count))
+        float timePrFall = mapTimeInSeconds / amountGmjFound;
+        if ((Time.time - mapStartTime) > (timePrFall * (amountGmjFound - gmjStillAlive.Count + 1)))//+1 such that a piece is not falling from the start
         {
             int index = UnityEngine.Random.Range(0, gmjStillAlive.Count);
             GameObject chosenGmjToDestroy = gmjStillAlive[index];
