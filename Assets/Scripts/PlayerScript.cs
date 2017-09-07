@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -51,9 +52,20 @@ public class PlayerScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-        if (transform.position.y < -18f) 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Ida: This is resetting the game
+    void Update() {
+        if (transform.position.y < -18f) {
+            if (this.name.Equals("Player_red"))
+            {
+                Text score = GameObject.Find("Score_green").GetComponent<Text>();
+                score.text = (int.Parse(score.text) + 1).ToString();
+            }
+            else if (this.name.Equals("Player_green"))
+            {
+                Text score = GameObject.Find("Score_red").GetComponent<Text>();
+                score.text = (int.Parse(score.text)+1).ToString();
+            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         if (continuousInput)
             UseContinuousInput();
         else

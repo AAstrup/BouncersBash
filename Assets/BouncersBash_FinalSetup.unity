@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 616032415}
   - component: {fileID: 616032414}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_red
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -679,8 +679,9 @@ GameObject:
   - component: {fileID: 658266891}
   - component: {fileID: 658266890}
   - component: {fileID: 658266889}
+  - component: {fileID: 658266893}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -763,6 +764,17 @@ RectTransform:
   m_AnchoredPosition: {x: -16.7, y: -8.03}
   m_SizeDelta: {x: 96.1, y: 57.16}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &658266893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 658266888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e1eaa1ea648e2469484a3231b736eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &684313981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1108,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5
+  m_Text: 
 --- !u!222 &848084292
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1733,7 +1745,7 @@ GameObject:
   - component: {fileID: 1675584342}
   - component: {fileID: 1675584341}
   m_Layer: 0
-  m_Name: Player2
+  m_Name: Player_green
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1790,7 +1802,7 @@ MonoBehaviour:
   continuousInput: 0
   continuousMoveSpeed: 0.1
   noncontinuousMoveSpeed: 2
-  maxHorizontalSpeedInput: 4
+  maxHorizontalSpeedInput: 20
   minVerticalSpeed: 10
   maxVerticalSpeed: 10
 --- !u!212 &1675584344
@@ -2105,7 +2117,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 
 --- !u!222 &2126287610
 CanvasRenderer:
   m_ObjectHideFlags: 0
