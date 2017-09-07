@@ -53,8 +53,8 @@ public class PlayerScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (transform.position.y < -10f)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (transform.position.y < -18f) 
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Ida: This is resetting the game
         if (continuousInput)
             UseContinuousInput();
         else
