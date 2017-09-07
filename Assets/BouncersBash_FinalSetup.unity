@@ -391,7 +391,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25a40333f6cf0b445a4e855593a7e7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomlyDestroyFloor: 1
   fallSpeed: 3
+  mapTimeInSeconds: 60
 --- !u!1 &252560123
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29422147b31292544b2f01f4f8f2ef77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHitEachOtherImpact: 1.5
   leftButton: a
   rightButton: d
   continuousInput: 0
@@ -1561,7 +1564,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1917270329
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: ffb82beece682c447b50293ef5a7a082, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1797,6 +1800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29422147b31292544b2f01f4f8f2ef77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHitEachOtherImpact: 1.5
   leftButton: left
   rightButton: right
   continuousInput: 0
