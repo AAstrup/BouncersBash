@@ -19,9 +19,19 @@ public class PlayerScript : MonoBehaviour {
     public float minVerticalSpeed = 8;
     public float maxVerticalSpeed = 8;
 
-    // Use this for initialization
+    Vector3 originalCameraPosition;
+    float shakeAmt = 0;
+    public Camera mainCamera;
+
+    private AudioSource audioSource;
+    public AudioClip groundBounceSound;
+    public AudioClip playerBounceSound;
+    public AudioClip deathSound;
+
     void Start () {
+        originalCameraPosition = mainCamera.transform.position;
         body = GetComponent<Rigidbody2D>();
+        audioSource = GameObject.Find("Score").GetComponent<AudioSource>();
     }
 
     private void UseNoncontinuousInput()
@@ -51,8 +61,7 @@ public class PlayerScript : MonoBehaviour {
                 body.velocity = new Vector2(body.velocity.x - continuousMoveSpeed, body.velocity.y);
         }
     }
-
-    // Update is called once per frame
+    
     void Update() {
         if (transform.position.y < -18f) {
             if (this.name.Equals("Player_red"))
@@ -65,6 +74,8 @@ public class PlayerScript : MonoBehaviour {
                 Text score = GameObject.Find("Score_red").GetComponent<Text>();
                 score.text = (int.Parse(score.text)+1).ToString();
             }
+
+            audioSource.PlayOneShot(deathSound, 1f);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         if (continuousInput)
@@ -76,10 +87,15 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+
         if (col.gameObject.tag.Equals("Player"))
         {
+            audioSource.PlayOneShot(playerBounceSound, 1f);
             PlayerCollision(col);
             return;
+        } else
+        {
+            audioSource.PlayOneShot(groundBounceSound, 1f);
         }
         Vector2 n = col.contacts[0].normal;
         Vector2 newDir = Vector2.Reflect(velocityFromLastFrame, n);
@@ -89,8 +105,6 @@ public class PlayerScript : MonoBehaviour {
 
         if (col.contacts[0].point.y < transform.position.y)
             correctMomentum.y = minVerticalSpeed;
-
-
 
         body.velocity = correctMomentum;
     }
@@ -110,7 +124,10 @@ public class PlayerScript : MonoBehaviour {
         var otherVel = otherScript.GetVelocity() * playerHitEachOtherImpact;
         otherScript.SetVelocity(velocityFromLastFrame * playerHitEachOtherImpact);
         body.velocity = otherVel;
-
+        
+        shakeAmt = col.relativeVelocity.magnitude * .01f;
+        InvokeRepeating("CameraShake", 0, .01f);
+        Invoke("StopShaking", 0.15f);
     }
 
     private void UpdateLastPlayerCollisionTime()
@@ -138,5 +155,24 @@ public class PlayerScript : MonoBehaviour {
         v.x = (cos * tx) - (sin * ty);
         v.y = (sin * tx) + (cos * ty);
         return v;
+    }
+
+    void CameraShake()
+    {
+        if (shakeAmt > 0)
+        {
+            float quakeAmtY = UnityEngine.Random.value * shakeAmt * 2 - shakeAmt;
+            float quakeAmtX = UnityEngine.Random.value * shakeAmt * 2 - shakeAmt;
+            Vector3 pp = mainCamera.transform.position;
+            pp.y += quakeAmtY;
+            pp.x += quakeAmtX;
+            mainCamera.transform.position = pp;
+        }
+    }
+
+    void StopShaking()
+    {
+        CancelInvoke("CameraShake");
+        mainCamera.transform.position = originalCameraPosition;
     }
 }
