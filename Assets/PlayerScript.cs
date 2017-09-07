@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour {
 
+    public float playerHitEachOtherImpact = 2f;
     public string leftButton;
     public string rightButton;
     public bool continuousInput;
@@ -94,8 +95,8 @@ public class PlayerScript : MonoBehaviour {
         lastPlayerCollisionTime = Time.time;
         otherScript.UpdateLastPlayerCollisionTime();
 
-        var otherVel = otherScript.GetVelocity();
-        otherScript.SetVelocity(velocityFromLastFrame);
+        var otherVel = otherScript.GetVelocity() * playerHitEachOtherImpact;
+        otherScript.SetVelocity(velocityFromLastFrame * playerHitEachOtherImpact);
         body.velocity = otherVel;
 
     }
