@@ -54,7 +54,10 @@ public class Destructable : MonoBehaviour {
     private void SetDestroyTarget(int i)
     {
         if (!gmjFalling.Contains(gmjToFall[i]))
+        {
             gmjNumberQueuedDestroyTarget = i;
+            Debug.Log("Destruction of " + gmjNumberQueuedDestroyTarget + " is now queued");
+        }
     }
 
     private void CheckForRandomGmjToDestroy()
