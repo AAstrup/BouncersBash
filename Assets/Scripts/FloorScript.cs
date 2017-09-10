@@ -14,11 +14,11 @@ public class FloorScript : MonoBehaviour {
         originalColour = this.GetComponent<SpriteRenderer>().color;
         speed = 10f;
         floatSpan = 0.5f;
-        originalPosition = transform.position;
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        originalPosition = transform.position;
         InvokeRepeating("Bounce", 0, 0.01f);
         Invoke("StopBouncing", 0.15f);
         StartCoroutine(ChangeColour());
